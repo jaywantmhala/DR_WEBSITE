@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GuruVed Healthcare - Premium Ayurvedic Medicine Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#059669',
+                        'primary-dark': '#047857',
+                        'secondary': '#0ea5e9',
+                        'accent': '#f59e0b',
+                        'success': '#10b981',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'slide-in-left': 'slideInLeft 1s ease-out',
+                        'slide-in-right': 'slideInRight 1s ease-out',
+                        'bounce-gentle': 'bounceGentle 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                        'rotate-slow': 'rotateSlow 20s linear infinite',
+                        'gradient-shift': 'gradientShift 3s ease-in-out infinite',
+                        'shine': 'shine 0.8s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideInLeft: {
+                            '0%': { opacity: '0', transform: 'translateX(-100px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(100px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        bounceGentle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(5, 150, 105, 0.4)' },
+                            '50%': { boxShadow: '0 0 40px rgba(5, 150, 105, 0.8)' },
+                        },
+                        rotateSlow: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' },
+                        },
+                        gradientShift: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                        shine: {
+                            '0%': { transform: 'rotate(45deg) translateX(-100%)' },
+                            '100%': { transform: 'rotate(45deg) translateX(100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Enhanced Product Image Display */
+        .product-image-container {
+            position: relative;
+            height: 320px;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 0;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: all 0.4s ease;
+            border-radius: 0;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        /* Image overlay effects */
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                45deg,
+                rgba(5, 150, 105, 0.1) 0%,
+                transparent 30%,
+                transparent 70%,
+                rgba(5, 150, 105, 0.1) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card:hover .image-overlay {
+            opacity: 1;
+        }
+
+        /* Enhanced product card styling */
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            transform: translateY(0);
+            border-radius: 24px;
+            overflow: hidden;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Enhanced badge positioning */
+        .badge-container {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        /* Image shine effect */
+        .image-shine {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.3) 50%,
+                transparent 70%
+            );
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .product-card:hover .image-shine {
+            opacity: 1;
+            animation: shine 0.8s ease-in-out;
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.95) 0%, rgba(4, 120, 87, 0.95) 100%),
+                        radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            background-size: cover, 600px 600px, 800px 800px, 50px 50px;
+            background-position: center, 0% 0%, 100% 100%, 0 0;
+            animation: gradientShift 6s ease-in-out infinite;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+
+        .hero-shape-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            right: 5%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-shape-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 15%;
+            left: 5%;
+            animation: float 4s ease-in-out infinite reverse;
+        }
+
+        .hero-shape-3 {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 25%;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #ec4899, #8b5cf6);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+
+        .card-hover-glow:hover {
+            box-shadow: 0 0 40px rgba(5, 150, 105, 0.4);
+        }
+
+        .hero-content, .hero-visual {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+        }
+
+        .modal-container {
+            max-height: 90vh;
+            overflow: hidden;
+        }
+
+        .modal-body {
+            max-height: calc(90vh - 80px);
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .floating-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3));
+            filter: blur(2px);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 120px;
+            height: 120px;
+            top: 70%;
+            right: 15%;
+            animation-delay: -2s;
+        }
+
+        .orb-3 {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 70%;
+            animation-delay: -1s;
+        }
+
+        .logo-glow {
+            filter: drop-shadow(0 0 20px rgba(5, 150, 105, 0.3));
+        }
+
+        .hero-cta-primary {
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-cta-primary:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .interactive-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 177, 153, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(100, 200, 200, 0.2) 0%, transparent 50%);
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-gray-900">
+
+    <!-- Enhanced Navigation with Logo -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-gray-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <img src="logo-modified.png" alt="GuruVed Healthcare Logo" class="w-14 h-14 rounded-xl logo-glow">
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">GuruVed Healthcare</h1>
+                        <p class="text-xs text-primary font-medium">Premium Ayurvedic Medicine</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-gray-700 hover:text-primary transition-colors font-medium relative">Home</a>
+                    <a href="#products" class="nav-link text-gray-700 hover:text-primary transition-colors font-medium relative">Products</a>
+                    <a href="#about" class="nav-link text-gray-700 hover:text-primary transition-colors font-medium relative">About</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-primary transition-colors font-medium relative">Contact</a>
+                    <div class="flex items-center space-x-4">
+                        <button class="relative p-2 text-gray-600 hover:text-primary transition-colors">
+                            <i class="fas fa-heart text-xl"></i>
+                            <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-bounce">2</span>
+                        </button>
+                        <button id="cart-btn" class="relative p-2 text-gray-600 hover:text-primary transition-colors">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </button>
+                        <button class="bg-gradient-to-r from-primary to-primary-dark text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                            Login / Register
+                        </button>
+                    </div>
+                </div>
+                
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-4 py-4 space-y-4">
+                <a href="#home" class="block text-gray-700 hover:text-primary transition-colors font-medium py-2">Home</a>
+                <a href="#products" class="block text-gray-700 hover:text-primary transition-colors font-medium py-2">Products</a>
+                <a href="#about" class="block text-gray-700 hover:text-primary transition-colors font-medium py-2">About</a>
+                <a href="#contact" class="block text-gray-700 hover:text-primary transition-colors font-medium py-2">Contact</a>
+                <button class="w-full bg-gradient-to-r from-primary to-primary-dark text-white px-6 py-2.5 rounded-full font-semibold mt-4">
+                    Login / Register
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Ultra Attractive Hero Section -->
+    <section id="home" class="min-h-screen hero-bg flex items-center text-white relative overflow-hidden">
+        <!-- Enhanced Animated Background -->
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+        <div class="hero-shape hero-shape-3"></div>
+        
+        <!-- Floating Orbs -->
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+        
+        <!-- Enhanced Particles -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute w-3 h-3 bg-yellow-400/60 rounded-full animate-bounce" style="top: 15%; left: 8%; animation-delay: 0s;"></div>
+            <div class="absolute w-2 h-2 bg-blue-400/60 rounded-full animate-bounce" style="top: 65%; left: 85%; animation-delay: 1s;"></div>
+            <div class="absolute w-4 h-4 bg-purple-400/60 rounded-full animate-bounce" style="top: 35%; right: 15%; animation-delay: 2s;"></div>
+            <div class="absolute w-2 h-2 bg-green-400/60 rounded-full animate-bounce" style="bottom: 35%; left: 75%; animation-delay: 0.5s;"></div>
+            <div class="absolute w-3 h-3 bg-pink-400/60 rounded-full animate-bounce" style="bottom: 65%; right: 65%; animation-delay: 1.5s;"></div>
+            <div class="absolute w-1 h-1 bg-white/70 rounded-full animate-bounce" style="top: 80%; left: 20%; animation-delay: 3s;"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="hero-content space-y-10">
+                    <div class="hero-badge inline-flex items-center glass-effect rounded-full px-8 py-4 border border-white/30 shadow-2xl">
+                        <i class="fas fa-star text-yellow-400 mr-3 animate-spin text-lg"></i>
+                        <span class="text-base font-semibold">Trusted by 50,000+ Happy Customers</span>
+                        <i class="fas fa-certificate text-blue-400 ml-3 text-lg"></i>
+                    </div>
+                    
+                    <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl font-bold leading-tight">
+                        Natural Healing with
+                        <span class="text-gradient block mt-4">
+                            Premium Ayurveda
+                        </span>
+                    </h1>
+                    
+                    <p class="hero-subtitle text-xl md:text-2xl opacity-95 leading-relaxed max-w-2xl">
+                        Discover our authentic ayurvedic medicines for piles and hernia treatment. 
+                        <span class="text-yellow-300 font-bold bg-black/20 px-2 py-1 rounded-lg">100% natural ingredients</span> 
+                        with scientifically proven results.
+                    </p>
+                    
+                    <div class="hero-buttons flex flex-col sm:flex-row gap-6">
+                        <button onclick="scrollToProducts()" class="hero-cta-primary text-primary px-10 py-5 rounded-full font-bold text-lg shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex items-center justify-center group">
+                            <i class="fas fa-pills mr-4 group-hover:animate-bounce text-xl"></i>
+                            Shop Premium Products
+                            <i class="fas fa-arrow-right ml-4 group-hover:translate-x-2 transition-transform text-xl"></i>
+                        </button>
+                        <button class="glass-effect border-2 border-white/40 text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-white/20 transition-all duration-300 flex items-center justify-center group shadow-2xl">
+                            <i class="fas fa-play mr-4 group-hover:scale-125 transition-transform text-xl"></i>
+                            Watch How It Works
+                        </button>
+                    </div>
+                    
+                    <div class="hero-stats grid grid-cols-3 gap-10 pt-10">
+                        <div class="stat-item text-center transform hover:scale-110 transition-transform cursor-pointer">
+                            <div class="text-5xl font-bold text-yellow-300 mb-3 counter" data-target="100">100</div>
+                            <div class="text-base opacity-90 font-medium">% Natural</div>
+                        </div>
+                        <div class="stat-item text-center transform hover:scale-110 transition-transform cursor-pointer">
+                            <div class="text-5xl font-bold text-yellow-300 mb-3 counter" data-target="15">15</div>
+                            <div class="text-base opacity-90 font-medium">+ Years Trusted</div>
+                        </div>
+                        <div class="stat-item text-center transform hover:scale-110 transition-transform cursor-pointer">
+                            <div class="text-5xl font-bold text-yellow-300 mb-3 counter" data-target="95">95</div>
+                            <div class="text-base opacity-90 font-medium">% Success Rate</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-visual relative">
+                    <!-- Enhanced Floating Cards -->
+                    <div class="floating-card absolute -top-8 -left-12 glass-effect p-8 rounded-3xl animate-float border border-white/30 shadow-2xl">
+                        <div class="flex items-center gap-5">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-leaf text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-white text-lg">100% Organic</div>
+                                <div class="text-base text-white/80">Natural Ingredients</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="floating-card absolute top-1/4 -right-16 glass-effect p-8 rounded-3xl animate-float border border-white/30 shadow-2xl" style="animation-delay: -1s;">
+                        <div class="flex items-center gap-5">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-shield-check text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-white text-lg">FDA Approved</div>
+                                <div class="text-base text-white/80">Certified Quality</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="floating-card absolute bottom-12 left-8 glass-effect p-8 rounded-3xl animate-float border border-white/30 shadow-2xl" style="animation-delay: -2s;">
+                        <div class="flex items-center gap-5">
+                            <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-shipping-fast text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-white text-lg">Free Delivery</div>
+                                <div class="text-base text-white/80">24-48 Hours</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Enhanced Central Hero Image -->
+                    <div class="central-hero-image flex items-center justify-center">
+                        <div class="relative">
+                            <div class="w-96 h-96 rounded-full border-4 border-white/40 animate-pulse-glow flex items-center justify-center shadow-2xl">
+                                <div class="w-80 h-80 glass-effect rounded-full flex items-center justify-center">
+                                    <div class="text-center">
+                                        <img src="logo-modified.png" alt="GuruVed Logo" class="w-32 h-32 mx-auto mb-6 rounded-2xl shadow-2xl logo-glow">
+                                        <div class="text-white font-bold text-2xl mb-2">Premium Ayurveda</div>
+                                        <div class="text-white/80 text-lg">Authentic Medicine</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Enhanced Orbiting Elements -->
+                            <div class="absolute inset-0 animate-rotate-slow">
+                                <div class="absolute top-6 left-1/2 w-6 h-6 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full transform -translate-x-1/2 shadow-lg"></div>
+                                <div class="absolute bottom-6 left-1/2 w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full transform -translate-x-1/2 shadow-lg"></div>
+                                <div class="absolute left-6 top-1/2 w-6 h-6 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full transform -translate-y-1/2 shadow-lg"></div>
+                                <div class="absolute right-6 top-1/2 w-6 h-6 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full transform -translate-y-1/2 shadow-lg"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Trust Indicators -->
+    <section class="py-20 bg-white border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="trust-indicator text-center group">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-green-400 to-green-600 rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                        <i class="fas fa-shipping-fast text-3xl text-white"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-3 text-lg">Free Shipping</h4>
+                    <p class="text-gray-600">On orders above ₹500</p>
+                </div>
+                
+                <div class="trust-indicator text-center group">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-blue-400 to-blue-600 rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                        <i class="fas fa-shield-alt text-3xl text-white"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-3 text-lg">100% Secure</h4>
+                    <p class="text-gray-600">SSL encrypted payments</p>
+                </div>
+                
+                <div class="trust-indicator text-center group">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-yellow-400 to-orange-500 rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                        <i class="fas fa-undo text-3xl text-white"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-3 text-lg">Easy Returns</h4>
+                    <p class="text-gray-600">30-day return policy</p>
+                </div>
+                
+                <div class="trust-indicator text-center group">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-purple-400 to-purple-600 rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl">
+                        <i class="fas fa-headset text-3xl text-white"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-3 text-lg">24/7 Support</h4>
+                    <p class="text-gray-600">Expert assistance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Products Section with Full-Screen Images -->
+    <section id="products" class="py-20 interactive-bg relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center bg-white/20 text-white px-8 py-4 rounded-full mb-8 backdrop-blur-md border border-white/30">
+                    <i class="fas fa-pills mr-3 text-xl"></i>
+                    <span class="font-bold text-lg">Premium Products</span>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-bold text-white mb-6">Our Medicine Collection</h2>
+                <p class="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">Scientifically formulated ayurvedic medicines using traditional wisdom and modern research for effective natural healing</p>
+            </div>
+            
+            <!-- Enhanced Product Filter -->
+            <div class="flex flex-wrap justify-center gap-6 mb-16">
+                <button class="filter-btn active px-10 py-4 bg-white text-primary rounded-full font-bold shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 text-lg" data-filter="all">
+                    <i class="fas fa-th-large mr-3"></i>
+                    All Products
+                </button>
+                <button class="filter-btn px-10 py-4 bg-white/20 text-white border-2 border-white/30 rounded-full font-bold hover:bg-white hover:text-primary transition-all transform hover:-translate-y-1 backdrop-blur-md text-lg" data-filter="piles">
+                    <i class="fas fa-pills mr-3"></i>
+                    Piles Treatment
+                </button>
+                <button class="filter-btn px-10 py-4 bg-white/20 text-white border-2 border-white/30 rounded-full font-bold hover:bg-white hover:text-primary transition-all transform hover:-translate-y-1 backdrop-blur-md text-lg" data-filter="combo">
+                    <i class="fas fa-gift mr-3"></i>
+                    Combo Packs
+                </button>
+            </div>
+            
+            <!-- Enhanced Product Cards with Full-Screen Images -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="products-grid">
+                <!-- Product 1: Pile-o-Care ANOACT VATI -->
+                <div class="product-card bg-white shadow-2xl overflow-hidden group card-hover-glow" data-category="piles">
+                    <div class="product-image-container relative">
+                        <img src="product1.jpeg" alt="Pile-o-Care ANOACT VATI" class="product-image" loading="lazy">
+                        <div class="image-overlay"></div>
+                        <div class="image-shine"></div>
+                        
+                        <!-- Enhanced Badges -->
+                        <div class="badge-container">
+                            <span class="bg-gradient-to-r from-orange-400 to-red-500 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg animate-pulse">
+                                <i class="fas fa-fire mr-1"></i>
+                                BESTSELLER
+                            </span>
+                            <span class="bg-gradient-to-r from-green-400 to-green-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
+                                40% OFF
+                            </span>
+                        </div>
+                        
+                        <!-- Enhanced Quick Action Overlay -->
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                            <div class="flex gap-4">
+                                <button class="bg-white text-gray-900 p-4 rounded-full shadow-xl hover:scale-125 transition-transform">
+                                    <i class="fas fa-eye text-lg"></i>
+                                </button>
+                                <button class="bg-primary text-white p-4 rounded-full shadow-xl hover:scale-125 transition-transform">
+                                    <i class="fas fa-heart text-lg"></i>
+                                </button>
+                                <button class="bg-blue-500 text-white p-4 rounded-full shadow-xl hover:scale-125 transition-transform">
+                                    <i class="fas fa-share-alt text-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Pile-o-Care ANOACT VATI</h3>
+                                <p class="text-sm text-gray-600 font-medium">Ayurvedic Proprietary Medicine</p>
+                            </div>
+                            <button class="text-gray-400 hover:text-red-500 transition-colors transform hover:scale-110">
+                                <i class="fas fa-heart text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Advanced ayurvedic formula for piles treatment with natural ingredients for gentle healing and lasting relief.
+                        </p>
+                        
+                        <!-- Enhanced Rating -->
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-sm text-gray-600 font-semibold">(4.9) • 2.4k reviews</span>
+                            <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">Verified</span>
+                        </div>
+                        
+                        <!-- Enhanced Price -->
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="text-3xl font-bold text-gray-900">₹299</span>
+                            <span class="text-lg text-gray-500 line-through">₹499</span>
+                            <span class="bg-gradient-to-r from-green-400 to-green-600 text-white text-sm font-bold px-3 py-1 rounded-full">40% OFF</span>
+                        </div>
+                        
+                        <!-- Key Benefits -->
+                        <div class="bg-gray-50 rounded-2xl p-4 mb-6">
+                            <h4 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                Key Benefits:
+                            </h4>
+                            <div class="grid grid-cols-1 gap-2 text-sm">
+                                <span class="flex items-center gap-2 text-gray-700">
+                                    <i class="fas fa-dot-circle text-green-500 text-xs"></i>
+                                    Reduces pain & inflammation
+                                </span>
+                                <span class="flex items-center gap-2 text-gray-700">
+                                    <i class="fas fa-dot-circle text-green-500 text-xs"></i>
+                                    100% natural ingredients
+                                </span>
+                                <span class="flex items-center gap-2 text-gray-700">
+                                    <i class="fas fa-dot-circle text-green-500 text-xs"></i>
+                                    No side effects
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Action Buttons -->
+                        <div class="flex gap-3 mb-4">
+                            <button onclick="openOrderModal('Pile-o-Care ANOACT VATI', 299, 499)" class="flex-1 bg-gradient-to-r from-primary to-primary-dark text-white py-4 rounded-2xl font-bold hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                                <i class="fas fa-shopping-bag"></i>
+                                Order Now
+                            </button>
+                            <button onclick="addToCart('Pile-o-Care ANOACT VATI', 299)" class="px-5 py-4 border-2 border-primary text-primary rounded-2xl hover:bg-primary hover:text-white transition-colors transform hover:scale-105">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Enhanced Trust Indicators -->
+                        <div class="flex items-center justify-between text-xs text-gray-600 bg-gray-50 rounded-xl p-3">
+                            <span class="flex items-center gap-2">
+                                <i class="fas fa-shipping-fast text-green-500"></i>
+                                <span class="font-semibold">Free Delivery</span>
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <i class="fas fa-shield-check text-blue-500"></i>
+                                <span class="font-semibold">Authentic</span>
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <i class="fas fa-award text-orange-500"></i>
+                                <span class="font-semibold">Quality</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2: Pile-o-Care LEXOCARE -->
+                <div class="product-card bg-white shadow-2xl overflow-hidden group card-hover-glow" data-category="piles">
+                    <div class="product-image-container relative">
+                        <img src="product2.jpeg" alt="Pile-o-Care LEXOCARE" class="product-image" loading="lazy">
+                        <div class="image-overlay"></div>
+                        <div class="image-shine"></div>
+                        
+                        <div class="badge-container">
+                            <span class="bg-gradient-to-r from-blue-400 to-blue-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
+                                <i class="fas fa-star mr-1"></i>
+                                ADVANCED
+                            </span>
+                            <span class="bg-gradient-to-r from-green-400 to-green-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
+                                25% OFF
+                            </span>
+                        </div>
+                        
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                            <div class="flex gap-4">
+                                <button class="bg-white text-gray-900 p-4 rounded-full shadow-xl hover:scale-125 transition-transform">
+                                    <i class="fas fa-eye text-lg"></i>
+                                </button>
+                                <button class="bg-blue-500 text-white p-4 rounded-full shadow-xl hover:scale-125 transition-transform">
+                                    <i class="fas fa-heart text-lg"></i>
+                                </button>
+                                <button class="bg-purple-500 text-white p-4 rounded-full shadow-xl hover:scale-125 transition-transform">
+                                    <i class="fas fa-share-alt text-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Pile-o-Care LEXOCARE</h3>
+                                <p class="text-sm text-gray-600 font-medium">Advanced Digestive Care</p>
+                            </div>
+                            <button class="text-gray-400 hover:text-red-500 transition-colors transform hover:scale-110">
+                                <i class="fas fa-heart text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Enhanced formula with digestive enzymes for comprehensive piles care and better gut health.
+                        </p>
+                        
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-sm text-gray-600 font-semibold">(4.7) • 1.8k reviews</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded-full">Trending</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="text-3xl font-bold text-gray-900">₹449</span>
+                            <span class="text-lg text-gray-500 line-through">₹599</span>
+                            <span class="bg-gradient-to-r from-blue-400 to-blue-600 text-white text-sm font-bold px-3 py-1 rounded-full">25% OFF</span>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded-2xl p-4 mb-6">
+                            <h4 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                                <i class="fas fa-check-circle text-blue-500"></i>
+                                Key Features:
+                            </h4>
+                            <div class="grid grid-cols-1 gap-2 text-sm">
+                                <span class="flex items-center gap-2 text-gray-700">
+                                    <i class="fas fa-dot-circle text-blue-500 text-xs"></i>
+                                    Advanced digestive support
+                                </span>
+                                <span class="flex items-center gap-2 text-gray-700">
+                                    <i class="fas fa-dot-circle text-blue-500 text-xs"></i>
+                                    Faster healing process
+                                </span>
+                                <span class="flex items-center gap-2 text-gray-700">
+                                    <i class="fas fa-dot-circle text-blue-500 text-xs"></i>
+                                    Improved gut health
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3 mb-4">
+                            <button onclick="openOrderModal('Pile-o-Care LEXOCARE', 449, 599)" class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 rounded-2xl font-bold hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                                <i class="fas fa-shopping-bag"></i>
+                                Order Now
+                            </button>
+                            <button onclick="addToCart('Pile-o-Care LEXOCARE', 449)" class="px-5 py-4 border-2 border-blue-500 text-blue-500 rounded-2xl hover:bg-blue-500 hover:text-white transition-colors transform hover:scale-105">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="flex items-center justify-between text-xs text-gray-600 bg-gray-50 rounded-xl p-3">
+                            <span class="flex items-center gap-2">
+                                <i class="fas fa-shipping-fast text-green-500"></i>
+                                <span class="font-semibold">Free Delivery</span>
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <i class="fas fa-shield-check text-blue-500"></i>
+                                <span class="font-semibold">Authentic</span>
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <i class="fas fa-award text-orange-500"></i>
+                                <span class="font-semibold">Premium</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3: Premium Combo Pack -->
+                <div class="product-card bg-white shadow-2xl overflow-hidden group border-2 border-yellow-400 card-hover-glow" data-category="combo">
+                    <div class="product-image-container relative">
+                        <img src="product3.jpeg" alt="Complete Care Combo Pack" class="product-image" loading="lazy">
+                        <div class="image-overlay"></div>
+                        <div class="image-shine"></div>
+                        
+                        <div class="badge-container">
+                            <span class="bg-gradient-to-r from-yellow-400 to-orange-400 text-black text-xs font-bold px-4 py-2 rounded-full shadow-lg animate-pulse">
+                                <i class="fas fa-crown mr-1"></i>
+                                BEST VALUE
+                            </span>
+                            <span class="bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
+                                SAVE ₹400
+                            </span>
+                        </div>
+                        
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                            <div class="flex gap-4">
+                                <button class="bg-white text-gray-900 p-4 rounded-full shadow-xl hover:scale-125 transition-transform">
+                                    <i class="fas fa-eye text-lg"></i>
+                                </button>
+                                <button class="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-full shadow-xl hover:scale-125 transition-transform">
+                                    <i class="fas fa-heart text-lg"></i>
+                                </button>
+                                <button class="bg-orange-500 text-white p-4 rounded-full shadow-xl hover:scale-125 transition-transform">
+                                    <i class="fas fa-share-alt text-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Complete Care Combo</h3>
+                                <p class="text-sm text-gray-600 font-medium">2 Medicines + Free Consultation</p>
+                            </div>
+                            <button class="text-gray-400 hover:text-red-500 transition-colors transform hover:scale-110">
+                                <i class="fas fa-heart text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Get both premium medicines at special combo price with free expert consultation and diet plan.
+                        </p>
+                        
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-sm text-gray-600 font-semibold">(5.0) • Best Seller</span>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full">Hot Deal</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="text-3xl font-bold text-gray-900">₹599</span>
+                            <span class="text-lg text-gray-500 line-through">₹999</span>
+                            <span class="bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-bold px-3 py-1 rounded-full">Save ₹400</span>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-4 mb-6 border border-purple-200">
+                            <h4 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                                <i class="fas fa-gift text-purple-500"></i>
+                                What's Included:
+                            </h4>
+                            <div class="grid grid-cols-1 gap-2 text-sm">
+                                <span class="flex items-center gap-2 text-gray-700">
+                                    <i class="fas fa-check text-purple-500"></i>
+                                    Pile-o-Care ANOACT VATI
+                                </span>
+                                <span class="flex items-center gap-2 text-gray-700">
+                                    <i class="fas fa-check text-purple-500"></i>
+                                    Pile-o-Care LEXOCARE
+                                </span>
+                                <span class="flex items-center gap-2 text-gray-700">
+                                    <i class="fas fa-gift text-purple-500"></i>
+                                    Free Expert Consultation
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3 mb-4">
+                            <button onclick="openOrderModal('Complete Care Combo Pack', 599, 999)" class="flex-1 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white py-4 rounded-2xl font-bold hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                                <i class="fas fa-shopping-bag"></i>
+                                Order Now
+                            </button>
+                            <button onclick="addToCart('Complete Care Combo Pack', 599)" class="px-5 py-4 border-2 border-purple-500 text-purple-500 rounded-2xl hover:bg-purple-500 hover:text-white transition-colors transform hover:scale-105">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="flex items-center justify-between text-xs text-gray-600 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-3">
+                            <span class="flex items-center gap-2">
+                                <i class="fas fa-gift text-purple-500"></i>
+                                <span class="font-semibold">Limited Offer</span>
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <i class="fas fa-phone text-green-500"></i>
+                                <span class="font-semibold">Free Consultation</span>
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <i class="fas fa-crown text-yellow-500"></i>
+                                <span class="font-semibold">Premium</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ultra Attractive Order Modal -->
+    <div id="order-modal" class="fixed inset-0 z-50 hidden modal-backdrop">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full modal-container border-4 border-primary/20">
+                <!-- Enhanced Modal Header -->
+                <div class="bg-gradient-to-r from-primary to-primary-dark text-white p-8 rounded-t-3xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-black/10"></div>
+                    <div class="relative z-10 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md">
+                                <i class="fas fa-shopping-bag text-3xl text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-3xl font-bold">Place Your Order</h3>
+                                <p class="text-white/80 text-lg">Complete your purchase safely & securely</p>
+                            </div>
+                        </div>
+                        <button onclick="closeOrderModal()" class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors backdrop-blur-md">
+                            <i class="fas fa-times text-2xl text-white"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Decorative Elements -->
+                    <div class="absolute top-4 right-20 w-20 h-20 bg-white/10 rounded-full"></div>
+                    <div class="absolute bottom-4 left-20 w-16 h-16 bg-white/10 rounded-full"></div>
+                </div>
+                
+                <!-- Enhanced Modal Body -->
+                <div class="modal-body p-8">
+                    <!-- Enhanced Product Summary -->
+                    <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-8 mb-8 border-2 border-gray-200">
+                        <h4 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                            <i class="fas fa-clipboard-list text-primary"></i>
+                            Order Summary
+                        </h4>
+                        <div class="flex items-center justify-between mb-6 p-4 bg-white rounded-2xl shadow-md">
+                            <div class="flex items-center gap-6">
+                                <div class="w-20 h-20 bg-gradient-to-br from-primary to-primary-dark rounded-2xl flex items-center justify-center shadow-lg">
+                                    <i class="fas fa-pills text-white text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h5 id="modal-product-name" class="text-xl font-bold text-gray-900 mb-1"></h5>
+                                    <p class="text-gray-600">Premium Ayurvedic Medicine</p>
+                                    <div class="flex items-center gap-2 mt-2">
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star text-sm"></i>
+                                            <i class="fas fa-star text-sm"></i>
+                                            <i class="fas fa-star text-sm"></i>
+                                            <i class="fas fa-star text-sm"></i>
+                                            <i class="fas fa-star text-sm"></i>
+                                        </div>
+                                        <span class="text-sm text-gray-600">(4.9)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="flex items-center gap-3">
+                                    <span id="modal-original-price" class="text-xl text-gray-500 line-through"></span>
+                                    <span id="modal-price" class="text-3xl font-bold text-primary"></span>
+                                </div>
+                                <span class="text-sm text-green-600 font-semibold">✓ Best Price Guaranteed</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Quantity Selector -->
+                        <div class="flex items-center justify-between p-4 bg-white rounded-2xl shadow-md">
+                            <span class="text-lg font-bold text-gray-700 flex items-center gap-2">
+                                <i class="fas fa-boxes text-primary"></i>
+                                Quantity:
+                            </span>
+                            <div class="flex items-center gap-4">
+                                <button onclick="updateQuantity(-1)" class="w-12 h-12 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors shadow-md hover:shadow-lg">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span id="quantity" class="text-2xl font-bold text-gray-900 min-w-8 text-center bg-gray-100 px-4 py-2 rounded-xl">1</span>
+                                <button onclick="updateQuantity(1)" class="w-12 h-12 bg-primary hover:bg-primary-dark text-white rounded-full flex items-center justify-center transition-colors shadow-md hover:shadow-lg">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Total -->
+                        <div class="bg-gradient-to-r from-primary/10 to-primary-dark/10 rounded-2xl p-6 mt-6 border-2 border-primary/20">
+                            <div class="flex items-center justify-between text-2xl font-bold">
+                                <span class="text-gray-900 flex items-center gap-3">
+                                    <i class="fas fa-calculator text-primary"></i>
+                                    Total Amount:
+                                </span>
+                                <span id="total-amount" class="text-primary text-3xl">₹299</span>
+                            </div>
+                            <div class="flex items-center gap-2 mt-2 text-green-600">
+                                <i class="fas fa-shipping-fast"></i>
+                                <span class="font-semibold">Free shipping included!</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Enhanced Order Form -->
+                    <form id="order-form" class="space-y-8">
+                        <div class="bg-white rounded-3xl p-8 shadow-lg border-2 border-gray-100">
+                            <h4 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                                <i class="fas fa-user-edit text-primary"></i>
+                                Personal Information
+                            </h4>
+                            
+                            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                                <div class="relative">
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">Full Name *</label>
+                                    <div class="relative">
+                                        <i class="fas fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                        <input type="text" name="fullName" required class="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-primary focus:outline-none transition-colors bg-gray-50 hover:bg-white">
+                                    </div>
+                                </div>
+                                <div class="relative">
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">Phone Number *</label>
+                                    <div class="relative">
+                                        <i class="fas fa-phone absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                        <input type="tel" name="phone" required class="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-primary focus:outline-none transition-colors bg-gray-50 hover:bg-white">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="relative">
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">Email Address</label>
+                                    <div class="relative">
+                                        <i class="fas fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                        <input type="email" name="email" class="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-primary focus:outline-none transition-colors bg-gray-50 hover:bg-white">
+                                    </div>
+                                </div>
+                                <div class="relative">
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">Age</label>
+                                    <div class="relative">
+                                        <i class="fas fa-calendar absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                        <input type="number" name="age" min="1" max="120" class="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-primary focus:outline-none transition-colors bg-gray-50 hover:bg-white">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-3xl p-8 shadow-lg border-2 border-gray-100">
+                            <h4 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                                <i class="fas fa-map-marker-alt text-primary"></i>
+                                Delivery Address
+                            </h4>
+                            
+                            <div class="mb-6">
+                                <label class="block text-sm font-bold text-gray-700 mb-3">Complete Address *</label>
+                                <div class="relative">
+                                    <i class="fas fa-home absolute left-4 top-4 text-gray-400"></i>
+                                    <textarea name="address" required rows="3" class="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-primary focus:outline-none transition-colors resize-none bg-gray-50 hover:bg-white"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-3 gap-6">
+                                <div class="relative">
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">City *</label>
+                                    <div class="relative">
+                                        <i class="fas fa-city absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                        <input type="text" name="city" required class="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-primary focus:outline-none transition-colors bg-gray-50 hover:bg-white">
+                                    </div>
+                                </div>
+                                <div class="relative">
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">State *</label>
+                                    <div class="relative">
+                                        <i class="fas fa-flag absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                        <select name="state" required class="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-primary focus:outline-none transition-colors bg-gray-50 hover:bg-white">
+                                            <option value="">Select State</option>
+                                            <option value="maharashtra">Maharashtra</option>
+                                            <option value="gujarat">Gujarat</option>
+                                            <option value="rajasthan">Rajasthan</option>
+                                            <option value="delhi">Delhi</option>
+                                            <option value="punjab">Punjab</option>
+                                            <option value="karnataka">Karnataka</option>
+                                            <option value="tamil-nadu">Tamil Nadu</option>
+                                            <option value="west-bengal">West Bengal</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="relative">
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">PIN Code *</label>
+                                    <div class="relative">
+                                        <i class="fas fa-map-pin absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                        <input type="text" name="pincode" required pattern="[0-9]{6}" class="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-primary focus:outline-none transition-colors bg-gray-50 hover:bg-white">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Payment Method -->
+                        <div class="bg-white rounded-3xl p-8 shadow-lg border-2 border-gray-100">
+                            <h4 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                                <i class="fas fa-credit-card text-primary"></i>
+                                Payment Method
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <label class="relative cursor-pointer group">
+                                    <input type="radio" name="paymentMethod" value="cod" required class="sr-only peer">
+                                    <div class="border-3 border-gray-200 rounded-2xl p-6 peer-checked:border-primary peer-checked:bg-primary/5 transition-all group-hover:shadow-lg">
+                                        <div class="text-center">
+                                            <div class="w-16 h-16 mx-auto bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mb-4">
+                                                <i class="fas fa-money-bill-wave text-3xl text-white"></i>
+                                            </div>
+                                            <div class="font-bold text-gray-900 text-lg mb-2">Cash on Delivery</div>
+                                            <div class="text-gray-600">Pay when delivered</div>
+                                            <div class="text-green-600 font-semibold text-sm mt-2">✓ Most Popular</div>
+                                        </div>
+                                    </div>
+                                </label>
+                                
+                                <label class="relative cursor-pointer group">
+                                    <input type="radio" name="paymentMethod" value="upi" class="sr-only peer">
+                                    <div class="border-3 border-gray-200 rounded-2xl p-6 peer-checked:border-primary peer-checked:bg-primary/5 transition-all group-hover:shadow-lg">
+                                        <div class="text-center">
+                                            <div class="w-16 h-16 mx-auto bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mb-4">
+                                                <i class="fab fa-google-pay text-3xl text-white"></i>
+                                            </div>
+                                            <div class="font-bold text-gray-900 text-lg mb-2">UPI Payment</div>
+                                            <div class="text-gray-600">Pay online now</div>
+                                            <div class="text-blue-600 font-semibold text-sm mt-2">✓ Instant</div>
+                                        </div>
+                                    </div>
+                                </label>
+                                
+                                <label class="relative cursor-pointer group">
+                                    <input type="radio" name="paymentMethod" value="card" class="sr-only peer">
+                                    <div class="border-3 border-gray-200 rounded-2xl p-6 peer-checked:border-primary peer-checked:bg-primary/5 transition-all group-hover:shadow-lg">
+                                        <div class="text-center">
+                                            <div class="w-16 h-16 mx-auto bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center mb-4">
+                                                <i class="fas fa-credit-card text-3xl text-white"></i>
+                                            </div>
+                                            <div class="font-bold text-gray-900 text-lg mb-2">Card Payment</div>
+                                            <div class="text-gray-600">Credit/Debit card</div>
+                                            <div class="text-purple-600 font-semibold text-sm mt-2">✓ Secure</div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Submit Button -->
+                        <div class="bg-gradient-to-r from-primary to-primary-dark rounded-3xl p-2">
+                            <button type="submit" class="w-full bg-white text-primary py-6 rounded-2xl font-bold text-2xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center group">
+                                <i class="fas fa-shopping-bag mr-4 text-3xl group-hover:animate-bounce"></i>
+                                <span id="submit-text">Place Order Now</span>
+                                <i class="fas fa-arrow-right ml-4 text-3xl group-hover:translate-x-2 transition-transform"></i>
+                                <div id="submit-spinner" class="hidden ml-4">
+                                    <i class="fas fa-spinner fa-spin text-3xl"></i>
+                                </div>
+                            </button>
+                        </div>
+                        
+                        <!-- Enhanced Trust Indicators -->
+                        <div class="flex items-center justify-center gap-8 pt-6 text-gray-600">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-shield-check text-green-500 text-xl"></i>
+                                <span class="font-semibold">Secure Order</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-shipping-fast text-blue-500 text-xl"></i>
+                                <span class="font-semibold">Fast Delivery</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-phone text-purple-500 text-xl"></i>
+                                <span class="font-semibold">24/7 Support</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
+                        <i class="fas fa-leaf mr-2"></i>
+                        <span class="font-semibold">About GuruVed Healthcare</span>
+                    </div>
+                    
+                    <h2 class="text-4xl font-bold text-gray-900 mb-6">Trusted Ayurvedic Medicine for Modern Life</h2>
+                    
+                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                        For over 15 years, GuruVed Healthcare has been India's most trusted name in authentic ayurvedic medicine. Our scientifically formulated products combine ancient wisdom with modern research to provide effective, natural healing solutions.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-gradient-to-r from-primary to-primary-dark text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all">
+                            Learn More
+                        </button>
+                        <button class="border-2 border-primary text-primary px-8 py-3 rounded-full font-semibold hover:bg-primary hover:text-white transition-colors">
+                            View Certificates
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="text-center p-6 bg-green-50 rounded-2xl transform hover:scale-105 transition-transform">
+                        <div class="text-3xl font-bold text-green-600 mb-2">50,000+</div>
+                        <div class="text-sm text-gray-600">Happy Customers</div>
+                    </div>
+                    
+                    <div class="text-center p-6 bg-blue-50 rounded-2xl transform hover:scale-105 transition-transform">
+                        <div class="text-3xl font-bold text-blue-600 mb-2">95%</div>
+                        <div class="text-sm text-gray-600">Success Rate</div>
+                    </div>
+                    
+                    <div class="text-center p-6 bg-yellow-50 rounded-2xl transform hover:scale-105 transition-transform">
+                        <div class="text-3xl font-bold text-yellow-600 mb-2">15+</div>
+                        <div class="text-sm text-gray-600">Years Experience</div>
+                    </div>
+                    
+                    <div class="text-center p-6 bg-purple-50 rounded-2xl transform hover:scale-105 transition-transform">
+                        <div class="text-3xl font-bold text-purple-600 mb-2">100%</div>
+                        <div class="text-sm text-gray-600">Natural Products</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 gradient-bg text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary-dark/90"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Get in Touch</h2>
+                <p class="text-xl opacity-90 max-w-2xl mx-auto">Have questions about our products? Our expert team is here to help you choose the right medicine for your needs.</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-phone text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-xl mb-2">Call Us</h4>
+                            <p class="text-lg opacity-90">+91 9876543210</p>
+                            <p class="text-sm opacity-70">Mon-Sat: 9AM-7PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-envelope text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-xl mb-2">Email Us</h4>
+                            <p class="text-lg opacity-90">support@guruvedhealthcare.com</p>
+                            <p class="text-sm opacity-70">Response within 24 hours</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-xl mb-2">Visit Our Store</h4>
+                            <p class="text-lg opacity-90">123 Ayurveda Street<br>Healthcare District, Mumbai 400001</p>
+                            <p class="text-sm opacity-70">Mon-Sat: 9AM-7PM</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-3xl p-8 border border-white/20">
+                    <h3 class="text-2xl font-semibold mb-6">Send us a Message</h3>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <input type="text" placeholder="Your Name" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-colors">
+                            <input type="tel" placeholder="Phone Number" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-colors">
+                        </div>
+                        <input type="email" placeholder="Email Address" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-colors">
+                        <textarea rows="4" placeholder="Your message..." class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-colors resize-none"></textarea>
+                        <button type="submit" class="w-full bg-white text-primary py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-3 mb-4">
+                    <img src="logo-modified.png" alt="GuruVed Healthcare Logo" class="w-10 h-10 rounded-xl logo-glow">
+                    <div>
+                        <h1 class="text-xl font-bold">GuruVed Healthcare</h1>
+                        <p class="text-xs text-gray-400">Premium Ayurvedic Medicine</p>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm mb-8">Trusted ayurvedic medicines for natural healing. Quality products backed by scientific research and traditional wisdom.</p>
+                
+                <div class="flex justify-center space-x-4 mb-8">
+                    <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-primary rounded-full flex items-center justify-center transition-colors">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-primary rounded-full flex items-center justify-center transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-primary rounded-full flex items-center justify-center transition-colors">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-primary rounded-full flex items-center justify-center transition-colors">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+                
+                <div class="border-t border-gray-800 pt-8">
+                    <p class="text-gray-400 text-sm">&copy; 2025 GuruVed Healthcare. All rights reserved. | Crafted with care for your health</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
